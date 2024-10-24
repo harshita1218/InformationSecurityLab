@@ -1,0 +1,21 @@
+import phe.paillier as paillier
+
+# Key generation for multi-party computation
+public_key, private_key = paillier.generate_paillier_keypair()
+
+# Simulate encrypted votes from three parties
+party1_vote = 1
+party2_vote = 1
+party3_vote = 0
+
+# Encrypt votes
+enc_party1 = public_key.encrypt(party1_vote)
+enc_party2 = public_key.encrypt(party2_vote)
+enc_party3 = public_key.encrypt(party3_vote)
+
+# Homomorphic addition of encrypted votes
+encrypted_total_votes = enc_party1 + enc_party2 + enc_party3
+
+# Decrypt the result (trusted third party)
+decrypted_total = private_key.decrypt(encrypted_total_votes)
+print("Total votes:", decrypted_total)
